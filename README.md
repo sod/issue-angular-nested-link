@@ -1,27 +1,30 @@
 # IssueAngularNestedLink
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+Show diff between ssr & client for nested links.
 
-## Development server
+Use `npm run dev:ssr` to run dev server + ssr. You'll see DOM on http://localhost:4200/ produced by the angular client:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+```
+    <a href="/?source=outer" class="outer">
+      Outer Link
+      <br>
+      <a href="/?source=inner" class="inner">Inner Link</a>
 
-## Code scaffolding
+      <div>content behind inner, inside outer</div>
+    </a>
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+But if you disable javascript (or look at the html response directly) you'll see:
 
-## Build
+```
+    <a href="/?source=outer" class="outer">
+      Outer Link
+      <br>
+    </a>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+    <a href="/?source=inner" class="inner">Inner Link</a>
 
-## Running unit tests
+    <div>content behind inner, inside outer</div>
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The DOM structure was altered. Dominos moved nested link.
