@@ -40,7 +40,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/issue-angular-nested-link",
+            "outputPath": "dist/issue-angular-nested-link/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -100,6 +100,60 @@
           "options": {
             "browserTarget": "issue-angular-nested-link:build"
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/issue-angular-nested-link/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "issue-angular-nested-link:build:development",
+              "serverTarget": "issue-angular-nested-link:server:development"
+            },
+            "production": {
+              "browserTarget": "issue-angular-nested-link:build:production",
+              "serverTarget": "issue-angular-nested-link:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "issue-angular-nested-link:build:production",
+              "serverTarget": "issue-angular-nested-link:server:production"
+            },
+            "development": {
+              "browserTarget": "issue-angular-nested-link:build:development",
+              "serverTarget": "issue-angular-nested-link:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
